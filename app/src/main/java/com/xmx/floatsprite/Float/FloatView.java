@@ -4,18 +4,16 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.xmx.floatsprite.MainActivity;
 import com.xmx.floatsprite.R;
 import com.xmx.floatsprite.Tools.Data.DataManager;
 import com.xmx.floatsprite.Tools.Float.BaseFloatView;
-import com.xmx.floatsprite.Tools.Float.FloatViewManager;
 
 /**
  * Created by The_onE on 2016/8/26.
@@ -98,6 +96,12 @@ public class FloatView extends BaseFloatView {
         }
     }
 
+    private void startCamera() {
+        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getContext().startActivity(intent);
+    }
+
     @Override
     public void onTouchStart(MotionEvent event) {
 
@@ -112,10 +116,20 @@ public class FloatView extends BaseFloatView {
     @Override
     public void onTouchEnd(MotionEvent event, long deltaTime,
                            float deltaX, float deltaY, double distance) {
-        if (deltaTime > LONG_CLICK_TIME && distance < CLICK_DISTANCE) { //长按
-            changeVolume();
-        } else if (deltaTime > CLICK_TIME && distance < CLICK_DISTANCE) { //短按
+    }
 
-        }
+    @Override
+    public void onLongClick() {
+        changeVolume();
+    }
+
+    @Override
+    public void onSingleClick() {
+        Toast.makeText(getContext(), "更多功能制作中", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDoubleClick() {
+        startCamera();
     }
 }

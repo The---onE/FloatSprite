@@ -1,5 +1,7 @@
 package com.xmx.floatsprite.Float;
 
+import android.content.Intent;
+
 import com.xmx.floatsprite.MainActivity;
 import com.xmx.floatsprite.Tools.Float.FloatViewManager;
 import com.xmx.floatsprite.Tools.ServiceBase.BaseService;
@@ -15,6 +17,11 @@ public class FloatService extends BaseService {
     public void onDestroy() {
         FloatViewManager.getInstance().hideFloatView(this);
         super.onDestroy();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return START_STICKY;
     }
 
     @Override

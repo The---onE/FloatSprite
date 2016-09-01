@@ -47,4 +47,19 @@ public class SmallFloatView extends BaseFloatView {
                     new FloatView(getContext()));
         }
     }
+
+    @Override
+    public void onLongClick() {
+
+    }
+
+    @Override
+    public void onSingleClick() {
+
+    }
+
+    @Override
+    public void onDoubleClick() {
+
+    }
 }
