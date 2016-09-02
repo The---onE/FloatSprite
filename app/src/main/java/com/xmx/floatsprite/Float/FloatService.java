@@ -15,7 +15,9 @@ public class FloatService extends BaseService {
 
     @Override
     public void onDestroy() {
-        FloatViewManager.getInstance().hideFloatView(this);
+        //FloatViewManager.getInstance().hideFloatView(this);
+        Intent service = new Intent(FloatService.this, FloatService.class);
+        startService(service);
         super.onDestroy();
     }
 

@@ -14,7 +14,9 @@ import android.view.View;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.xmx.floatsprite.Float.FloatService;
+import com.xmx.floatsprite.Float.FloatView;
 import com.xmx.floatsprite.Tools.ActivityBase.BaseNavigationActivity;
+import com.xmx.floatsprite.Tools.Float.FloatViewManager;
 import com.xmx.floatsprite.User.Callback.AutoLoginCallback;
 import com.xmx.floatsprite.User.UserConstants;
 import com.xmx.floatsprite.User.UserManager;
@@ -37,6 +39,22 @@ public class MainActivity extends BaseNavigationActivity {
         getViewById(R.id.btn_show_float).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ActivityManager manager =
+                        (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+                int defaultNum = 1000;
+                List<ActivityManager.RunningServiceInfo> runServiceList = manager
+                        .getRunningServices(defaultNum);
+                for (ActivityManager.RunningServiceInfo runServiceInfo : runServiceList) {
+                    if (runServiceInfo.foreground) {
+                        if (runServiceInfo.service
+                                .getShortClassName().equals(".Float.FloatService")) {
+                            Intent intent = new Intent();
+                            intent.setComponent(runServiceInfo.service);
+                            stopService(intent);
+                        }
+                    }
+                }
+
                 Intent service = new Intent(MainActivity.this, FloatService.class);
                 startService(service);
             }
@@ -45,27 +63,28 @@ public class MainActivity extends BaseNavigationActivity {
         getViewById(R.id.btn_hide_float).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityManager manager =
-                        (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                int defaultNum = 1000;
-                List<ActivityManager.RunningServiceInfo> runServiceList = manager
-                        .getRunningServices(defaultNum);
-                boolean flag = false;
-                for (ActivityManager.RunningServiceInfo runServiceInfo : runServiceList) {
-                    if (runServiceInfo.foreground) {
-                        if (runServiceInfo.service
-                                .getShortClassName().equals(".Float.FloatService")) {
-                            Intent intent = new Intent();
-                            intent.setComponent(runServiceInfo.service);
-                            stopService(intent);
-                            showToast("已关闭浮动窗口");
-                            flag = true;
-                        }
-                    }
-                }
-                if (!flag) {
-                    showToast("浮动窗口未开启");
-                }
+                FloatViewManager.getInstance().hideFloatView(getApplicationContext());
+//                ActivityManager manager =
+//                        (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+//                int defaultNum = 1000;
+//                List<ActivityManager.RunningServiceInfo> runServiceList = manager
+//                        .getRunningServices(defaultNum);
+//                boolean flag = false;
+//                for (ActivityManager.RunningServiceInfo runServiceInfo : runServiceList) {
+//                    if (runServiceInfo.foreground) {
+//                        if (runServiceInfo.service
+//                                .getShortClassName().equals(".Float.FloatService")) {
+//                            Intent intent = new Intent();
+//                            intent.setComponent(runServiceInfo.service);
+//                            stopService(intent);
+//                            showToast("已关闭浮动窗口");
+//                            flag = true;
+//                        }
+//                    }
+//                }
+//                if (!flag) {
+//                    showToast("浮动窗口未开启");
+//                }
             }
         });
     }
