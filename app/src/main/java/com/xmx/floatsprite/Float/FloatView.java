@@ -125,7 +125,7 @@ public class FloatView extends BaseFloatView {
 
     @Override
     public void onSingleClick() {
-        Toast.makeText(getContext(), "更多功能制作中", Toast.LENGTH_SHORT).show();
+        FloatViewManager.getInstance().showFloatView(getContext(), new FloatDetailView(getContext()));
     }
 
     @Override
