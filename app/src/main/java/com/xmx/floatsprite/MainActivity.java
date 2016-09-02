@@ -91,6 +91,22 @@ public class MainActivity extends BaseNavigationActivity {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
+        ActivityManager manager =
+                (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        int defaultNum = 1000;
+        List<ActivityManager.RunningServiceInfo> runServiceList = manager
+                .getRunningServices(defaultNum);
+        for (ActivityManager.RunningServiceInfo runServiceInfo : runServiceList) {
+            if (runServiceInfo.foreground) {
+                if (runServiceInfo.service
+                        .getShortClassName().equals(".Float.FloatService")) {
+                    Intent intent = new Intent();
+                    intent.setComponent(runServiceInfo.service);
+                    stopService(intent);
+                }
+            }
+        }
+
         Intent service = new Intent(MainActivity.this, FloatService.class);
         startService(service);
 

@@ -34,10 +34,11 @@ public abstract class BaseFloatView extends RelativeLayout {
 
     protected static final int CLICK_DISTANCE = 25;
     protected static final long LONG_CLICK_TIME = 500;
-    protected static final long CLICK_TIME = 200;
     protected static final long DOUBLE_CLICK_TIME = 300;
+    protected static final long TRIPLE_CLICK_TIME = 300;
 
     private boolean doubleClickFlag = false;
+    private boolean tripleClickFlag = false;
 
     public BaseFloatView(Context context, AttributeSet attrs, int defStyle) {
         super(context);
@@ -89,7 +90,7 @@ public abstract class BaseFloatView extends RelativeLayout {
                 if (deltaTime > LONG_CLICK_TIME && distance < CLICK_DISTANCE) { //长按
                     onLongClick();
                 } else if (deltaTime > 0 && distance < CLICK_DISTANCE) { //短按
-                    if (!doubleClickFlag) { //首次短按
+                    if (!doubleClickFlag && !tripleClickFlag) { //首次短按
                         doubleClickFlag = true; //等待第二次按键
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -101,10 +102,24 @@ public abstract class BaseFloatView extends RelativeLayout {
                                 doubleClickFlag = false;
                             }
                         }, DOUBLE_CLICK_TIME);
-                    } else { //双按
+                    } else if (!tripleClickFlag){ //双按
                         doubleClickFlag = false;
-                        //执行双按逻辑
-                        onDoubleClick();
+                        tripleClickFlag = true; //等待第三次按键
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (tripleClickFlag) { //超时未按下第三次
+                                    //执行双按逻辑
+                                    onDoubleClick();
+                                }
+                                tripleClickFlag = false;
+                            }
+                        }, TRIPLE_CLICK_TIME);
+                    } else { //三按
+                        //执行三按逻辑
+                        onTripleClick();
+                        doubleClickFlag = false;
+                        tripleClickFlag = false;
                     }
                 }
                 break;
@@ -201,4 +216,6 @@ public abstract class BaseFloatView extends RelativeLayout {
     abstract public void onSingleClick();
 
     abstract public void onDoubleClick();
+
+    abstract public void onTripleClick();
 }

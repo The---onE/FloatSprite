@@ -28,6 +28,6 @@ public class FloatService extends BaseService {
 
     @Override
     protected void setForeground() {
-        showForeground(MainActivity.class, "浮动窗口已打开");
+        showForeground(MainActivity.class, "桌面精灵运行中");
     }
 }

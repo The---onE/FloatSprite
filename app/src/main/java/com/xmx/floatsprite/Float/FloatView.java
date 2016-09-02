@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 import com.xmx.floatsprite.R;
 import com.xmx.floatsprite.Tools.Data.DataManager;
 import com.xmx.floatsprite.Tools.Float.BaseFloatView;
+import com.xmx.floatsprite.Tools.Float.FloatViewManager;
 
 /**
  * Created by The_onE on 2016/8/26.
@@ -131,5 +131,10 @@ public class FloatView extends BaseFloatView {
     @Override
     public void onDoubleClick() {
         startCamera();
+    }
+
+    @Override
+    public void onTripleClick() {
+        FloatViewManager.getInstance().hideFloatView(getContext());
     }
 }

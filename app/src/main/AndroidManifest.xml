@@ -14,7 +14,7 @@
 
     <!-- 基础模块 END -->
     <application
-        android:name="com.xmx.floatsprite.Application"
+        android:name=".Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -35,7 +35,7 @@
         <!-- 实时通信模块、推送 END -->
 
         <receiver
-            android:name="com.xmx.floatsprite.Tools.PushMessage.ItemMessageReceiver"
+            android:name=".Tools.PushMessage.ItemMessageReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -46,7 +46,7 @@
         </receiver>
 
         <activity
-            android:name="com.xmx.floatsprite.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
@@ -57,27 +57,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.xmx.floatsprite.User.LoginActivity"
+            android:name=".User.LoginActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.xmx.floatsprite.User.RegisterActivity"
+            android:name=".User.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.xmx.floatsprite.Tools.ChoosePhoto.AlbumActivity"
+            android:name=".Tools.ChoosePhoto.AlbumActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.xmx.floatsprite.Tools.ChoosePhoto.BigPhotoActivity"
+            android:name=".Tools.ChoosePhoto.BigPhotoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.xmx.floatsprite.Tools.ChoosePhoto.PhotoActivity"
+            android:name=".Tools.ChoosePhoto.PhotoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.xmx.floatsprite.Tools.PushMessage.ReceiveMessageActivity"
+            android:name=".Tools.PushMessage.ReceiveMessageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name="com.xmx.floatsprite.Float.FloatService"
+            android:name=".Float.FloatService"
             android:enabled="true"
             android:exported="true" />
     </application>
