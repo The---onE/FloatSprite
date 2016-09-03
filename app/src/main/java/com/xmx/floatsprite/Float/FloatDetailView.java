@@ -1,5 +1,7 @@
 package com.xmx.floatsprite.Float;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -59,6 +61,27 @@ public class FloatDetailView extends BaseFloatView {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), ScanQRCodeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getContext().startActivity(intent);
+            }
+        });
+
+        Button search = (Button) findViewById(R.id.btn_search);
+        search.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager cm = (ClipboardManager) getContext().
+                        getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData cd = cm.getPrimaryClip();
+                String str = cd.getItemAt(0).getText().toString();
+                String res;
+                if (!str.equals("")) {
+                    res = "http://www.bing.com/search?q=" + str;
+                } else {
+                    res = "http://www.bing.com";
+                }
+                Uri uri = Uri.parse(res);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(intent);
             }
