@@ -75,6 +75,9 @@
         <activity
             android:name=".Tools.PushMessage.ReceiveMessageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".QRCode.ScanQRCodeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".Float.FloatService"

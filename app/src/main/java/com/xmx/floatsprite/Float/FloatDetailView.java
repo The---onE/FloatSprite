@@ -2,13 +2,16 @@ package com.xmx.floatsprite.Float;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.xmx.floatsprite.QRCode.ScanQRCodeActivity;
 import com.xmx.floatsprite.R;
 import com.xmx.floatsprite.Tools.Float.BaseFloatView;
 import com.xmx.floatsprite.Tools.Float.FloatViewManager;
@@ -46,6 +49,16 @@ public class FloatDetailView extends BaseFloatView {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getContext().startActivity(intent);
+            }
+        });
+
+        Button scan = (Button) findViewById(R.id.btn_scan);
+        scan.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ScanQRCodeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(intent);
             }
