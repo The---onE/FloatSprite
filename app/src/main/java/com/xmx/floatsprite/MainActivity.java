@@ -15,6 +15,7 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.xmx.floatsprite.Float.FloatService;
 import com.xmx.floatsprite.Float.FloatView;
+import com.xmx.floatsprite.OperationLog.OperationLogActivity;
 import com.xmx.floatsprite.Tools.ActivityBase.BaseNavigationActivity;
 import com.xmx.floatsprite.Tools.Float.FloatViewManager;
 import com.xmx.floatsprite.User.Callback.AutoLoginCallback;
@@ -39,6 +40,8 @@ public class MainActivity extends BaseNavigationActivity {
         getViewById(R.id.btn_show_float).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean flag = false;
+
                 ActivityManager manager =
                         (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
                 int defaultNum = 1000;
@@ -48,15 +51,21 @@ public class MainActivity extends BaseNavigationActivity {
                     if (runServiceInfo.foreground) {
                         if (runServiceInfo.service
                                 .getShortClassName().equals(".Float.FloatService")) {
-                            Intent intent = new Intent();
-                            intent.setComponent(runServiceInfo.service);
-                            stopService(intent);
+//                            Intent intent = new Intent();
+//                            intent.setComponent(runServiceInfo.service);
+//                            stopService(intent);
+                            flag = true;
                         }
                     }
                 }
-
-                Intent service = new Intent(MainActivity.this, FloatService.class);
-                startService(service);
+                if (flag) {
+                    FloatViewManager.getInstance().
+                            showFloatView(getApplicationContext(),
+                                    new FloatView(getApplicationContext()));
+                } else {
+                    Intent service = new Intent(MainActivity.this, FloatService.class);
+                    startService(service);
+                }
             }
         });
 
@@ -87,10 +96,19 @@ public class MainActivity extends BaseNavigationActivity {
 //                }
             }
         });
+
+        getViewById(R.id.btn_oper_log).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(OperationLogActivity.class);
+            }
+        });
     }
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
+        boolean flag = false;
+
         ActivityManager manager =
                 (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         int defaultNum = 1000;
@@ -100,15 +118,21 @@ public class MainActivity extends BaseNavigationActivity {
             if (runServiceInfo.foreground) {
                 if (runServiceInfo.service
                         .getShortClassName().equals(".Float.FloatService")) {
-                    Intent intent = new Intent();
-                    intent.setComponent(runServiceInfo.service);
-                    stopService(intent);
+//                            Intent intent = new Intent();
+//                            intent.setComponent(runServiceInfo.service);
+//                            stopService(intent);
+                    flag = true;
                 }
             }
         }
-
-        Intent service = new Intent(MainActivity.this, FloatService.class);
-        startService(service);
+        if (flag) {
+            FloatViewManager.getInstance().
+                    showFloatView(getApplicationContext(),
+                            new FloatView(getApplicationContext()));
+        } else {
+            Intent service = new Intent(MainActivity.this, FloatService.class);
+            startService(service);
+        }
 
         NavigationView navigation = getViewById(R.id.nav_view);
         Menu menu = navigation.getMenu();
@@ -140,6 +164,24 @@ public class MainActivity extends BaseNavigationActivity {
                 }
             }
         });
+    }
+
+    private void stopService() {
+        ActivityManager manager =
+                (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        int defaultNum = 1000;
+        List<ActivityManager.RunningServiceInfo> runServiceList = manager
+                .getRunningServices(defaultNum);
+        for (ActivityManager.RunningServiceInfo runServiceInfo : runServiceList) {
+            if (runServiceInfo.foreground) {
+                if (runServiceInfo.service
+                        .getShortClassName().equals(".Float.FloatService")) {
+                    Intent intent = new Intent();
+                    intent.setComponent(runServiceInfo.service);
+                    stopService(intent);
+                }
+            }
+        }
     }
 
     @Override

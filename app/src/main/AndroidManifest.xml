@@ -78,6 +78,9 @@
         <activity
             android:name=".QRCode.ScanQRCodeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".OperationLog.OperationLogActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".Float.FloatService"

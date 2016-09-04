@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
+import com.xmx.floatsprite.OperationLog.OperationLogEntityManager;
 import com.xmx.floatsprite.R;
 import com.xmx.floatsprite.Tools.Data.DataManager;
 import com.xmx.floatsprite.Tools.Float.BaseFloatView;
@@ -33,6 +34,7 @@ public class FloatView extends BaseFloatView {
         LayoutInflater.from(context).inflate(R.layout.layout_float, this);
 
         edgeMode = EDGE_MODE_XY;
+        OperationLogEntityManager.getInstance().addLog("创建浮动窗口");
 
 //        Button hideButton = (Button) findViewById(R.id.btn_hide);
 //        hideButton.setOnClickListener(new OnClickListener() {
@@ -85,6 +87,7 @@ public class FloatView extends BaseFloatView {
                     AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
 
             Toast.makeText(getContext(), "已关闭音量", Toast.LENGTH_SHORT).show();
+            OperationLogEntityManager.getInstance().addLog("关闭音量");
         } else {
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, prevMusicVolume,
                     AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
@@ -93,6 +96,7 @@ public class FloatView extends BaseFloatView {
                     AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
 
             Toast.makeText(getContext(), "已恢复音量", Toast.LENGTH_SHORT).show();
+            OperationLogEntityManager.getInstance().addLog("恢复音量");
         }
     }
 
@@ -100,6 +104,7 @@ public class FloatView extends BaseFloatView {
         Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getContext().startActivity(intent);
+        OperationLogEntityManager.getInstance().addLog("打开相机");
     }
 
     @Override
