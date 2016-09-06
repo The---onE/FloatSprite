@@ -59,6 +59,17 @@ public class FloatDetailView extends BaseFloatView {
             }
         });
 
+        Button vpn = (Button) findViewById(R.id.btn_vpn);
+        vpn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent("android.net.vpn.SETTINGS");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getContext().startActivity(intent);
+                OperationLogEntityManager.getInstance().addLog("打开VPN");
+            }
+        });
+
         Button scan = (Button) findViewById(R.id.btn_scan);
         scan.setOnClickListener(new OnClickListener() {
             @Override

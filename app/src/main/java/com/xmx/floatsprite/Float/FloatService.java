@@ -25,7 +25,7 @@ public class FloatService extends BaseService {
                 OperationLogEntityManager.getInstance().addLog("服务已运行" + (now - time) + "毫秒");
             }
         };
-        timer.start(5000);
+        timer.start(30000);
     }
 
     @Override
