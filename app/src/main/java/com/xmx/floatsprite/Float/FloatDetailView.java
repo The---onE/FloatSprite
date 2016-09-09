@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.provider.Settings;
 import android.util.AttributeSet;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.xmx.floatsprite.OperationLog.OperationLogEntityManager;
 import com.xmx.floatsprite.QRCode.ScanQRCodeActivity;
@@ -18,10 +20,15 @@ import com.xmx.floatsprite.R;
 import com.xmx.floatsprite.Tools.Float.BaseFloatView;
 import com.xmx.floatsprite.Tools.Float.FloatViewManager;
 
+import java.util.List;
+
 /**
  * Created by The_onE on 2016/8/30.
  */
 public class FloatDetailView extends BaseFloatView {
+
+    Camera camera;
+    private boolean flashlightFlag = false;
 
     public FloatDetailView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -102,6 +109,35 @@ public class FloatDetailView extends BaseFloatView {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getContext().startActivity(intent);
                     OperationLogEntityManager.getInstance().addLog("打开搜索");
+                }
+            }
+        });
+
+        Button flashlight = (Button) findViewById(R.id.btn_flashlight);
+        flashlight.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!flashlightFlag) {
+                    camera = Camera.open();
+                    Camera.Parameters params = camera.getParameters();
+                    List<String> list = params.getSupportedFlashModes();
+                    if (list.contains(Camera.Parameters.FLASH_MODE_TORCH)) {
+                        params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                    } else {
+                        Toast.makeText(getContext(), "此设备不支持手电筒功能",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    camera.setParameters(params);
+                    camera.startPreview();
+                    flashlightFlag = true;
+                } else {
+                    Camera.Parameters closeParameters = camera.getParameters();
+                    closeParameters
+                            .setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                    camera.setParameters(closeParameters);
+                    camera.stopPreview();
+                    camera.release();
+                    flashlightFlag = false;
                 }
             }
         });
