@@ -41,7 +41,7 @@ public class FloatDetailView extends BaseFloatView {
     public FloatDetailView(final Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         LayoutInflater.from(context).inflate(R.layout.layout_float_detail, this);
-        edgeMode = EDGE_MODE_XY;
+        //edgeMode = EDGE_MODE_XY;
         OperationLogEntityManager.getInstance().addLog("创建详细浮动窗口");
 
         Button wifi = (Button) findViewById(R.id.btn_wifi);

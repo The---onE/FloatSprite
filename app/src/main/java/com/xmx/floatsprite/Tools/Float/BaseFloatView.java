@@ -1,11 +1,16 @@
 package com.xmx.floatsprite.Tools.Float;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
+import android.support.annotation.IdRes;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.util.Date;
@@ -201,6 +206,39 @@ public abstract class BaseFloatView extends RelativeLayout {
                 break;
         }
         return pos;
+    }
+
+    protected <VT extends View> VT getViewById(@IdRes int id) {
+        return (VT) findViewById(id);
+    }
+
+    protected void showToast(String str) {
+        Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void showToast(int resId) {
+        Toast.makeText(getContext(), resId, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void showLog(String tag, String msg) {
+        Log.e(tag, msg);
+    }
+
+    protected void showLog(String tag, int i) {
+        Log.e(tag, "" + i);
+    }
+
+    protected void startActivity(Class<?> cls) {
+        Intent intent = new Intent(getContext(), cls);
+        getContext().startActivity(intent);
+    }
+
+    protected void startActivity(Class<?> cls, String... objs) {
+        Intent intent = new Intent(getContext(), cls);
+        for (int i = 0; i < objs.length; i++) {
+            intent.putExtra(objs[i], objs[++i]);
+        }
+        getContext().startActivity(intent);
     }
 
     abstract public void onTouchStart(MotionEvent event);
