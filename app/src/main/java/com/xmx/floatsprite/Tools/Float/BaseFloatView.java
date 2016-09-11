@@ -2,6 +2,7 @@ package com.xmx.floatsprite.Tools.Float;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.util.AttributeSet;
@@ -50,6 +51,12 @@ public abstract class BaseFloatView extends RelativeLayout {
         wm = (WindowManager) getContext().getApplicationContext()
                 .getSystemService(Context.WINDOW_SERVICE);
         statusBarHeight = getStatusBarHeight();
+    }
+
+    @Override
+    protected void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        updatePosition();
     }
 
     @Override
