@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.xmx.floatsprite.OperationLog.OperationLogEntityManager;
 import com.xmx.floatsprite.QRCode.ScanQRCodeActivity;
@@ -124,8 +123,7 @@ public class FloatDetailView extends BaseFloatView {
                     if (list.contains(Camera.Parameters.FLASH_MODE_TORCH)) {
                         params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
                     } else {
-                        Toast.makeText(getContext(), "此设备不支持手电筒功能",
-                                Toast.LENGTH_SHORT).show();
+                        showToast("此设备不支持手电筒功能");
                     }
                     camera.setParameters(params);
                     camera.startPreview();

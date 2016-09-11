@@ -133,6 +133,14 @@ public abstract class BaseFloatView extends RelativeLayout {
     }
 
     // 更新浮动窗口位置参数
+    public void updatePosition() {
+        float x = params.x;
+        float y = params.y;
+        Coordinate co = getCoordinateNearEdge(new Coordinate(x, y));
+        updatePosition(co);
+    }
+
+    // 更新浮动窗口位置参数
     protected void updatePosition(Coordinate coordinate) {
         // View的当前位置
         params.x = (int) coordinate.x;
